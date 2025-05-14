@@ -13,6 +13,7 @@ export const AppRoutes = () => {
         <Route path="/" element={<PublicLayout />}>
           <Route path="/" element={<PageHome />} />
           <Route path="/callback" element={<PageCallback />} />
+          <Route path="/403" element={<p>403 UnAuthorized</p>} />
           {/* <Route path="*" element={<p>404 NOT FOUND</p>} /> */}
         </Route>
         <Route path="protected/*" element={<ProtectedRoutes />} />
