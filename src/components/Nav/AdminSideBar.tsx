@@ -45,6 +45,9 @@ export const AdminSideBar = () => {
             Expo
           </Typography>
           <Button disabled fullWidth sx={{ mt: 1 }}>
+            Dashboard
+          </Button>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
             Sessions
           </Button>
           <Button disabled fullWidth sx={{ mt: 1 }}>
@@ -71,12 +74,19 @@ export const AdminSideBar = () => {
             Waqf-e-Ardhi
           </Typography>
           <Button disabled fullWidth sx={{ mt: 1 }}>
+            Dashboard
+          </Button>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
             Projects
           </Button>
           <Button disabled fullWidth sx={{ mt: 1 }}>
             Applicants
           </Button>
-          <Button disabled fullWidth sx={{ mt: 1 }}>
+          <Button
+            fullWidth
+            sx={{ mt: 1 }}
+            onClick={() => navigate("/protected/waqfeardhi/images")}
+          >
             Image Library
           </Button>
         </Box>
