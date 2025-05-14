@@ -1,8 +1,8 @@
-import {
-  Box
-} from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Avatar, Box, Typography } from "@mui/material";
 
 export const AdminBar = () => {
+  const { user } = useAuth0();
   return (
     <>
       <Box
@@ -16,7 +16,7 @@ export const AdminBar = () => {
           borderLeft: 0,
           borderTop: 0,
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "end",
           alignItems: "center",
           width: `calc(100% - 210px)`,
           p: 1,
@@ -32,7 +32,8 @@ export const AdminBar = () => {
             mx: 3,
           }}
         >
-          Logged In
+          <Avatar src={user?.picture} />
+          <Typography>{`${user?.given_name} ${user?.family_name}`}</Typography>
         </Box>
       </Box>
       <Box sx={{ height: 70 }}></Box>
