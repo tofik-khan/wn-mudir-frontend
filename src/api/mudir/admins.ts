@@ -10,6 +10,34 @@ export const adminAPI = {
       .get(`${API_BASE}/mudir/admins`)
       .then((response) => response.data);
   },
+  createAdmin: ({
+    authToken,
+    data,
+  }): Promise<{ data: string; status: string }> => {
+    return axios.post(
+      `${API_BASE}/mudir/admins`,
+      { ...data, email: `${data.email}@ahmadiyya.us` },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+  },
+  updateAdmin: ({
+    authToken,
+    data,
+  }): Promise<{ data: string; status: string }> => {
+    return axios.put(
+      `${API_BASE}/mudir/admins`,
+      { ...data, email: `${data.email}@ahmadiyya.us` },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+  },
   updateAdminImage: ({
     _id,
     image,

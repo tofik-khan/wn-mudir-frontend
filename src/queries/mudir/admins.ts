@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { API } from "@/api";
+import { Admin } from "@/types/admin";
 
 export const useAdminsQuery = () =>
   useQuery({
@@ -23,5 +24,30 @@ export const useAdminImageMutation = () => {
 export const useAdminLastLoginMutation = () => {
   return useMutation({
     mutationFn: ({ _id }: { _id: number }) => API.updateLastLogin({ _id }),
+  });
+};
+
+export const useCreateAdminMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ authToken, data }: { authToken: string; data: Admin }) =>
+      API.createAdmin({ authToken, data }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mudir/admins"] });
+    },
+  });
+};
+
+export const useUpdateAdminMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ authToken, data }: { authToken: string; data: Admin }) =>
+      API.updateAdmin({
+        authToken,
+        data,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mudir/admins"] });
+    },
   });
 };
