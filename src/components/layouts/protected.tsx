@@ -5,16 +5,25 @@ import { AdminSideBar } from "../Nav/AdminSideBar";
 import { Box } from "@mui/material";
 import { Loading } from "../Loading";
 import { useEffect } from "react";
-import { useAdminsQuery } from "@/queries/mudir/admins";
+import {
+  useAdminImageMutation,
+  useAdminLastLoginMutation,
+  useAdminsQuery,
+} from "@/queries/mudir/admins";
 
 export const ProtectedLayout = () => {
-  const {
-    isAuthenticated,
-    isLoading: isLoadingAuth,
-    logout,
-    user,
-  } = useAuth0();
+  const { isLoading: isLoadingAuth, logout, user } = useAuth0();
   const { isLoading: isLoadingAdmins, data: adminData } = useAdminsQuery();
+
+  const adminImageMutation = useAdminImageMutation();
+  const adminLastLoginMutation = useAdminLastLoginMutation();
+
+  const updateAdminImage = async ({ _id, image }) => {
+    await adminImageMutation.mutateAsync({
+      _id,
+      image,
+    });
+  };
 
   const handleLogout = () => {
     logout({
@@ -31,9 +40,13 @@ export const ProtectedLayout = () => {
       );
       if (!currentUser || !currentUser.isAuthorized) {
         handleLogout();
+      } else {
+        adminLastLoginMutation.mutate({ _id: currentUser._id });
+        if (currentUser.image !== user!.picture)
+          updateAdminImage({ _id: currentUser._id, image: user!.picture });
       }
     }
-  }, [isAuthenticated, isLoadingAdmins]);
+  }, [isLoadingAdmins, isLoadingAuth]);
 
   if (isLoadingAuth || isLoadingAdmins) return <Loading />;
 
