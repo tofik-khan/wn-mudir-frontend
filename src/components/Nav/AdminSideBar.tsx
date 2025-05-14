@@ -1,4 +1,4 @@
-import { Box, Button, Divider } from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import AppLogo from "@/assets/mudir-logo.png";
 import { Logout } from "@mui/icons-material";
@@ -35,9 +35,51 @@ export const AdminSideBar = () => {
           sx={{ "&:hover": { cursor: "pointer" }, mt: 3, mb: 5 }}
           onClick={() => navigate("/protected/dashboard")}
         >
-          <img src={AppLogo} width={150} height={70}  />
-        </ Box>
-        Links
+          <img src={AppLogo} width={150} height={70} />
+        </Box>
+        {/* WN Expo Links */}
+        <Box>
+          <Typography
+            sx={(theme) => ({ color: theme.palette.grey[600], ml: 4 })}
+          >
+            Expo
+          </Typography>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
+            Sessions
+          </Button>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
+            Presenters
+          </Button>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
+            FAQs
+          </Button>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
+            Image Library
+          </Button>
+        </Box>
+        <Divider
+          sx={{ my: 3 }}
+          orientation="horizontal"
+          variant="middle"
+          flexItem
+        />
+        {/* WN Waqf-e-Ardhi Links */}
+        <Box>
+          <Typography
+            sx={(theme) => ({ color: theme.palette.grey[600], ml: 4 })}
+          >
+            Waqf-e-Ardhi
+          </Typography>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
+            Projects
+          </Button>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
+            Applicants
+          </Button>
+          <Button disabled fullWidth sx={{ mt: 1 }}>
+            Image Library
+          </Button>
+        </Box>
         <Divider
           sx={{ my: 3 }}
           orientation="horizontal"
