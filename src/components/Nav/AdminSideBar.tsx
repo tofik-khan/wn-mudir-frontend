@@ -56,9 +56,6 @@ export const AdminSideBar = () => {
           <Button disabled fullWidth sx={{ mt: 1 }}>
             FAQs
           </Button>
-          <Button disabled fullWidth sx={{ mt: 1 }}>
-            Image Library
-          </Button>
         </Box>
         <Divider
           sx={{ my: 3 }}
@@ -82,13 +79,6 @@ export const AdminSideBar = () => {
           <Button disabled fullWidth sx={{ mt: 1 }}>
             Applicants
           </Button>
-          <Button
-            fullWidth
-            sx={{ mt: 1 }}
-            onClick={() => navigate("/protected/waqfeardhi/images")}
-          >
-            Image Library
-          </Button>
         </Box>
         <Divider
           sx={{ my: 3 }}
@@ -98,6 +88,13 @@ export const AdminSideBar = () => {
         />
         <Button fullWidth onClick={() => navigate("/protected/admins")}>
           Admins
+        </Button>
+        <Button
+          fullWidth
+          sx={{ mt: 1 }}
+          onClick={() => navigate("/protected/images")}
+        >
+          Image Library
         </Button>
       </Box>
       <Box

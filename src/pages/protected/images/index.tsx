@@ -1,14 +1,17 @@
 import { HideImage } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
+import { UploadImageModal } from "@/pages/protected/modals/UploadImageModal";
 
-export const PageWAimageLibrary = () => {
+export const PageImageLibrary = () => {
   const data = []; //temp until routes are created
+  const [openUploadImageModal, setOpenUploadImageModal] = useState(false);
 
   if (data.length < 1) {
     // Return empty page
     return (
       <>
-        <Typography variant="h2">Waqf-e-Ardhi Image Library</Typography>
+        <Typography variant="h2">Mudir Image Library</Typography>
         <Box
           sx={() => ({
             width: "100%",
@@ -28,8 +31,18 @@ export const PageWAimageLibrary = () => {
             })}
           />
           <Typography variant="h3">No Images Available</Typography>
-          <Button variant="contained">Upload Image</Button>
+          <Button
+            variant="contained"
+            onClick={() => setOpenUploadImageModal(true)}
+            sx={{ my: 2 }}
+          >
+            Upload Image
+          </Button>
         </Box>
+        <UploadImageModal
+          open={openUploadImageModal}
+          onClose={() => setOpenUploadImageModal(false)}
+        />
       </>
     );
   }
