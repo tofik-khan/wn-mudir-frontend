@@ -27,6 +27,7 @@ import { Close, CloudUpload } from "@mui/icons-material";
 import { useImageKitAuthQuery } from "@/queries/mudir/images";
 import { useState } from "react";
 import { Loading } from "@/components/Loading";
+import { waqfeArdhiFolders, expoFolders } from "@/constants";
 
 export const UploadImageModal = ({ open, onClose }) => {
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
@@ -111,24 +112,6 @@ export const UploadImageModal = ({ open, onClose }) => {
       }
     }
   };
-
-  const waqfeArdhiFolders = [
-    {
-      label: "Thumbnails",
-      value: "/waqfeardhi/thumbnails",
-    },
-  ];
-
-  const expoFolders = [
-    {
-      label: "Presenters",
-      value: "/expo/presenters",
-    },
-    {
-      label: "Thumbnails",
-      value: "/expo/thumbnails",
-    },
-  ];
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
