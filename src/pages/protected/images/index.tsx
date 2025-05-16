@@ -34,11 +34,15 @@ export const PageImageLibrary = () => {
           >
             <ListSubheader>Waqf-e-Ardhi</ListSubheader>
             {waqfeArdhiFolders.map((folder) => (
-              <MenuItem value={folder.id}>{folder.label}</MenuItem>
+              <MenuItem key={folder.id} value={folder.id}>
+                {folder.label}
+              </MenuItem>
             ))}
             <ListSubheader>Expo</ListSubheader>
             {expoFolders.map((folder) => (
-              <MenuItem value={folder.id}>{folder.label}</MenuItem>
+              <MenuItem key={folder.id} value={folder.id}>
+                {folder.label}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
