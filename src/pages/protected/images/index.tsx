@@ -8,20 +8,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { waqfeArdhiFolders, expoFolders } from "@/constants";
-import { WaqfeArdhiThumbnails } from "./WaqfeArdhiThumbnails";
-
-const ImageGalleryContent = ({ folder }) => {
-  switch (folder) {
-    case "/waqfeardhi/thumbnails":
-      return <WaqfeArdhiThumbnails />;
-    default:
-      <p>Something went wrong</p>;
-      break;
-  }
-};
+import { Gallery } from "./Gallery";
 
 export const PageImageLibrary = () => {
-  const [folder, setFolder] = useState(waqfeArdhiFolders[0].value);
+  const folders = [...waqfeArdhiFolders, ...expoFolders];
+  const [folder, setFolder] = useState(folders[0]);
 
   return (
     <>
@@ -31,21 +22,27 @@ export const PageImageLibrary = () => {
           <Select
             labelId="images-folder-selection"
             id="images-folder-selection"
-            value={folder}
+            value={folder.id}
             label="Folder"
-            onChange={(event) => setFolder(event.target.value)}
+            onChange={(event) =>
+              setFolder(
+                folders.find((folder) => folder.id === event.target.value) ||
+                  folders[0]
+              )
+            }
+            defaultValue={folder.id}
           >
             <ListSubheader>Waqf-e-Ardhi</ListSubheader>
             {waqfeArdhiFolders.map((folder) => (
-              <MenuItem value={folder.value}>{folder.label}</MenuItem>
+              <MenuItem value={folder.id}>{folder.label}</MenuItem>
             ))}
             <ListSubheader>Expo</ListSubheader>
             {expoFolders.map((folder) => (
-              <MenuItem value={folder.value}>{folder.label}</MenuItem>
+              <MenuItem value={folder.id}>{folder.label}</MenuItem>
             ))}
           </Select>
         </FormControl>
-        <ImageGalleryContent folder={folder} />
+        <Gallery folder={folder} title={folder.title} />
       </Box>
     </>
   );

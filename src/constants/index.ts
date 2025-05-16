@@ -1,17 +1,22 @@
-export const waqfeArdhiFolders = [
+import { Folder } from "@/types/images";
+
+export const waqfeArdhiFolders: Folder[] = [
   {
     label: "Thumbnails",
-    value: "/waqfeardhi/thumbnails",
+    id: "/waqfeardhi/thumbnails",
+    title: "Waqf-e-Ardhi Project Thumbnails",
   },
 ];
 
-export const expoFolders = [
+export const expoFolders: Folder[] = [
   {
     label: "Presenters",
-    value: "/expo/presenters",
+    id: "/expo/presenters",
+    title: "Expo Presenters",
   },
   {
     label: "Thumbnails",
-    value: "/expo/thumbnails",
+    id: "/expo/thumbnails",
+    title: "Expo Session Thumbnails",
   },
 ];

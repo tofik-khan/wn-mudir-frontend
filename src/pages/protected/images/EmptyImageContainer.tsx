@@ -1,10 +1,11 @@
 import { HideImage } from "@mui/icons-material";
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button, Alert, Snackbar } from "@mui/material";
 import { UploadImageModal } from "../modals/UploadImageModal";
 import { useState } from "react";
 
 export const EmptyImageContainer = () => {
   const [openUploadImageModal, setOpenUploadImageModal] = useState(false);
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   return (
     <>
       <Box
@@ -37,7 +38,23 @@ export const EmptyImageContainer = () => {
       <UploadImageModal
         open={openUploadImageModal}
         onClose={() => setOpenUploadImageModal(false)}
+        onSuccess={() => setOpenSuccessSnackbar(true)}
       />
+      <Snackbar
+        open={openSuccessSnackbar}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setOpenSuccessSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSuccessSnackbar(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Image Uploaded!
+        </Alert>
+      </Snackbar>
     </>
   );
 };

@@ -28,9 +28,9 @@ import { useImageKitAuthQuery } from "@/queries/mudir/images";
 import { useState } from "react";
 import { Loading } from "@/components/Loading";
 import { waqfeArdhiFolders, expoFolders } from "@/constants";
+import { useQueryClient } from "@tanstack/react-query";
 
-export const UploadImageModal = ({ open, onClose }) => {
-  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+export const UploadImageModal = ({ open, onClose, onSuccess }) => {
   const [error, setError] = useState({
     open: false,
     message: "",
@@ -40,6 +40,7 @@ export const UploadImageModal = ({ open, onClose }) => {
   const [progress, setProgress] = useState(0);
   const { data: imageKitAuth, isLoading: isLoadingAuth } =
     useImageKitAuthQuery();
+  const queryClient = useQueryClient();
 
   const handleUpload = async () => {
     if (!files || files?.length < 1) {
@@ -67,8 +68,6 @@ export const UploadImageModal = ({ open, onClose }) => {
     const file = files[0];
 
     const { signature, expire, token } = imageKitAuth;
-    console.log(file);
-    console.log(folder);
 
     try {
       const uploadResponse = await upload({
@@ -84,10 +83,13 @@ export const UploadImageModal = ({ open, onClose }) => {
         },
       });
       if (uploadResponse.$ResponseMetadata.statusCode === 200) {
+        queryClient.invalidateQueries({
+          queryKey: ["images", folder],
+        });
         setFiles(null);
         setFolder("");
+        onSuccess();
         onClose();
-        setOpenSuccessSnackbar(true);
       } else {
         setError({
           open: true,
@@ -173,11 +175,11 @@ export const UploadImageModal = ({ open, onClose }) => {
                   >
                     <ListSubheader>Waqf-e-Ardhi</ListSubheader>
                     {waqfeArdhiFolders.map((folder) => (
-                      <MenuItem value={folder.value}>{folder.label}</MenuItem>
+                      <MenuItem value={folder.id}>{folder.label}</MenuItem>
                     ))}
                     <ListSubheader>Expo</ListSubheader>
                     {expoFolders.map((folder) => (
-                      <MenuItem value={folder.value}>{folder.label}</MenuItem>
+                      <MenuItem value={folder.id}>{folder.label}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -242,21 +244,6 @@ export const UploadImageModal = ({ open, onClose }) => {
           )}
         </DialogContent>
       </Dialog>
-      <Snackbar
-        open={openSuccessSnackbar}
-        autoHideDuration={6000}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        onClose={() => setOpenSuccessSnackbar(false)}
-      >
-        <Alert
-          onClose={() => setOpenSuccessSnackbar(false)}
-          severity="success"
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          Image Uploaded!
-        </Alert>
-      </Snackbar>
       <Snackbar
         open={error.open}
         autoHideDuration={6000}
