@@ -4,6 +4,8 @@ import { PageDashboard } from "@/pages/protected/dashboard";
 import { PageAdmins } from "@/pages/protected/admins";
 import { Route, Routes } from "react-router";
 import { PageImageLibrary } from "@/pages/protected/images";
+import { PageProjects } from "@/pages/protected/waqfeardhi/projects";
+import { PageNewProject } from "@/pages/protected/waqfeardhi/projects/new";
 
 export const ProtectedRoutes = () => {
   return (
@@ -27,6 +29,18 @@ const WaqfeArdhiRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={<p>Waqf-e-Ardhi Dashboard</p>} />
+        <Route path="/projects/*" element={<WaqfeArdhiProjectRoutes />}></Route>
+      </Routes>
+    </>
+  );
+};
+
+const WaqfeArdhiProjectRoutes = () => {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<PageProjects />} />
+        <Route path="/new" element={<PageNewProject />} />
       </Routes>
     </>
   );
