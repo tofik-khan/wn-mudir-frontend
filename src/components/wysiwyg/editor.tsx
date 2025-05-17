@@ -1,7 +1,15 @@
 import { useRef } from "react";
 import JoditEditor from "jodit-react";
 
-export const Editor = ({ placeholder = null, content, setContent }) => {
+export const Editor = ({
+  placeholder,
+  content,
+  setContent,
+}: {
+  placeholder?: string;
+  content: string;
+  setContent: any;
+}) => {
   const editor = useRef(null);
 
   const config = {
@@ -27,10 +35,7 @@ export const Editor = ({ placeholder = null, content, setContent }) => {
       value={content}
       config={config}
       tabIndex={1} // tabIndex of textarea
-      onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-      onChange={(newContent) => {
-        console.log(newContent);
-      }}
+      onBlur={(newContent) => setContent(newContent)}
     />
   );
 };
