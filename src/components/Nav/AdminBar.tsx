@@ -31,7 +31,7 @@ export const AdminBar = () => {
             gap: 2,
             color: "black",
             mx: 3,
-            py: 1,
+            py: 2,
           }}
         >
           <Avatar src={user?.picture} />
