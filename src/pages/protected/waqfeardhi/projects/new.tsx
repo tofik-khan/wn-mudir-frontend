@@ -17,15 +17,17 @@ import { useNavigate } from "react-router";
 import { ThumbnailModals } from "./modals/ThumbnailModal";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppSelector } from "@/hooks";
+import { useCreateProjectMutation } from "@/queries/waqfeardhi/projects";
 
 export const PageNewProject = () => {
   const { control, handleSubmit, reset } = useForm();
+  const createProject = useCreateProjectMutation();
   const [editorContent, updateEditorContent] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState({ open: false, message: "" });
   const [openThumbnailModal, setOpenThumbnailModal] = useState(false);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { currentUser } = useAppSelector((state) => state.admin);
   const navigate = useNavigate();
   const onSubmit = async (data) => {
@@ -38,13 +40,18 @@ export const PageNewProject = () => {
       return;
     }
     if (isAuthenticated) {
-      console.log({
-        ...data,
-        description: editorContent,
-        thumbnail,
-        createdBy: currentUser?._id,
-        published: !!data.published,
+      const authToken = await getAccessTokenSilently();
+      createProject.mutate({
+        authToken,
+        data: {
+          ...data,
+          description: editorContent,
+          thumbnail,
+          createdBy: currentUser?._id,
+          published: !!data.published,
+        },
       });
+      setSuccess(true);
     }
   };
 
