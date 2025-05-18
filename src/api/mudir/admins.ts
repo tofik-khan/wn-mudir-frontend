@@ -1,6 +1,5 @@
-import { API_BASE } from "@/api/constants"
+import { API_BASE } from "@/api/constants";
 import { MongoDBUpdateResponseType } from "@/types";
-//import { MongoDBUpdateResponseType } from "@/types";
 import { Admin } from "@/types/admin";
 import axios from "axios";
 
