@@ -1,11 +1,18 @@
+import { LazyImage } from "@/components/LazyImage";
+import { Loading } from "@/components/Loading";
+import { useProjectsQuery } from "@/queries/waqfeardhi/projects";
 import { Add } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Switch, Typography } from "@mui/material";
 import { DataGridPro, gridClasses, GridColDef } from "@mui/x-data-grid-pro";
 import { useNavigate } from "react-router";
 
 export const PageProjects = () => {
   const navigate = useNavigate();
-  const data = []; // temporary empty data
+  const { data, isLoading, isRefetching } = useProjectsQuery();
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const columns: GridColDef[] = [
     {
@@ -17,46 +24,142 @@ export const PageProjects = () => {
       align: "center",
     },
     {
-      field: "title",
-      headerName: "Title",
-      renderCell: ({ row }) => <Typography>{row.title}</Typography>,
-      flex: 3,
+      field: "thumbnail",
+      headerName: "Thumbnail",
+      renderCell: ({ row }) => (
+        <LazyImage
+          src={row.thumbnail}
+          defaultImage={""}
+          style={{ width: "150px", height: "100px", objectFit: "contain" }}
+        />
+      ),
+      width: 160,
     },
     {
-      field: "subtitle",
-      headerName: "SubTitle",
-      renderCell: ({ row }) => <Typography>{row.subTitle}</Typography>,
+      field: "title",
+      headerName: "Title",
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>{row.title}</Typography>
+          <Typography sx={(theme) => ({ color: theme.palette.text.secondary })}>
+            {row.subtitle}
+          </Typography>
+        </Box>
+      ),
       flex: 3,
     },
     {
       field: "duration",
       headerName: "Duration",
-      renderCell: ({ row }) => <Typography>{row.duration}</Typography>,
-      flex: 3,
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>{row.duration}</Typography>
+        </Box>
+      ),
+      flex: 2,
     },
     {
       field: "audience",
       headerName: "Audience",
-      renderCell: ({ row }) => <Typography>{row.audience}</Typography>,
-      flex: 3,
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>{row.audience}</Typography>
+        </Box>
+      ),
+      flex: 2,
     },
     {
       field: "slug",
       headerName: "Slug",
-      renderCell: ({ row }) => <Typography>{row.description}</Typography>,
-      flex: 3,
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>{row.slug}</Typography>
+        </Box>
+      ),
+      width: 150,
     },
     {
       field: "sponsor",
       headerName: "Sponsor",
-      renderCell: ({ row }) => <Typography>{row.sponsor}</Typography>,
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>{row.sponsor.name}</Typography>
+          <Typography sx={(theme) => ({ color: theme.palette.text.secondary })}>
+            {row.sponsor.email}
+          </Typography>
+        </Box>
+      ),
       flex: 3,
     },
     {
       field: "badge",
       headerName: "Badge",
-      renderCell: ({ row }) => <Typography>{row.title}</Typography>,
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>{row.badge}</Typography>
+        </Box>
+      ),
       flex: 1,
+    },
+    {
+      field: "published",
+      headerName: "Published",
+      renderCell: ({ row }) => (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            <Switch checked={row.published} />
+          </Box>
+        </>
+      ),
     },
   ];
 
@@ -75,8 +178,14 @@ export const PageProjects = () => {
         </Button>
       </Box>
       <DataGridPro
-        rows={data}
+        loading={isLoading || isRefetching}
+        rows={
+          data &&
+          data.map((project, index) => ({ ...project, index: index + 1 }))
+        }
+        rowHeight={100}
         columns={columns}
+        getRowId={(row) => row._id}
         disableColumnMenu
         disableColumnResize
         sx={{
