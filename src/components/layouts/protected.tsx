@@ -10,6 +10,8 @@ import {
   useAdminLastLoginMutation,
   useAdminsQuery,
 } from "@/queries/mudir/admins";
+import { useAppDispatch } from "@/hooks";
+import { setCurrentUser } from "@/reducers/admin";
 
 export const ProtectedLayout = () => {
   const { isLoading: isLoadingAuth, logout, user } = useAuth0();
@@ -17,6 +19,8 @@ export const ProtectedLayout = () => {
 
   const adminImageMutation = useAdminImageMutation();
   const adminLastLoginMutation = useAdminLastLoginMutation();
+
+  const dispatch = useAppDispatch();
 
   const updateAdminImage = async ({ _id, image }) => {
     await adminImageMutation.mutateAsync({
@@ -56,6 +60,8 @@ export const ProtectedLayout = () => {
     handleLogout();
     return <></>;
   }
+
+  dispatch(setCurrentUser(currentUser));
 
   return (
     <>
