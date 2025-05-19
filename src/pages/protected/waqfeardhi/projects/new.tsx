@@ -2,10 +2,12 @@ import { LazyImage } from "@/components/LazyImage";
 import { Editor } from "@/components/wysiwyg/editor";
 import {
   Alert,
+  AlertTitle,
   Box,
   Button,
   Card,
   FormControlLabel,
+  LinearProgress,
   Snackbar,
   Switch,
   TextField,
@@ -309,18 +311,26 @@ export const PageNewProject = () => {
       />
       <Snackbar
         open={success}
-        autoHideDuration={6000}
+        autoHideDuration={10000}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setSuccess(false)}
       >
-        <Alert
-          onClose={() => setSuccess(false)}
-          severity="success"
-          variant="filled"
-          sx={{ width: "100%" }}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
         >
-          Project Created!
-        </Alert>
+          <Alert
+            onClose={() => setSuccess(false)}
+            severity="success"
+            variant="filled"
+          >
+            <AlertTitle>Project Created!</AlertTitle>
+          </Alert>
+          <LinearProgress sx={{ mx: 1 }} color="success" />
+        </Box>
       </Snackbar>
       <Snackbar
         open={error.open}
