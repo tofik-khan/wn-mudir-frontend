@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Avatar, Box, Typography } from "@mui/material";
+import WNLogomarkBlue from "@/assets/wn-logomark-blue.png";
 
 export const AdminBar = () => {
   const { user } = useAuth0();
@@ -16,26 +17,38 @@ export const AdminBar = () => {
           borderLeft: 0,
           borderTop: 0,
           display: "flex",
-          justifyContent: "end",
+          justifyContent: "space-between",
           alignItems: "center",
           width: `calc(100% - 210px)`,
           p: 1,
           zIndex: 1000,
         })}
       >
+        <img
+          src={WNLogomarkBlue}
+          width={300}
+          style={{ objectFit: "contain" }}
+        />
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            alignContent: "center",
-            gap: 2,
+            gap: 1,
             color: "black",
             mx: 3,
             py: 2,
           }}
         >
           <Avatar src={user?.picture} />
-          <Typography>{`${user?.given_name} ${user?.family_name}`}</Typography>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography
+              m={0}
+              variant="subtitle2"
+            >{`${user?.given_name} ${user?.family_name}`}</Typography>
+            <Typography color="text.secondary" variant="subtitle2">
+              {user?.email}
+            </Typography>
+          </Box>
         </Box>
       </Box>
       <Box sx={{ height: 70 }}></Box>
