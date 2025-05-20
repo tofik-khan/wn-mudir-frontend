@@ -5,7 +5,7 @@ import { PageAdmins } from "@/pages/protected/admins";
 import { Route, Routes } from "react-router";
 import { PageImageLibrary } from "@/pages/protected/images";
 import { PageProjects } from "@/pages/protected/waqfeardhi/projects";
-import { PageNewProject } from "@/pages/protected/waqfeardhi/projects/new";
+import { PageCreateEditProject } from "@/pages/protected/waqfeardhi/projects/CreateEditProject";
 
 export const ProtectedRoutes = () => {
   return (
@@ -40,7 +40,7 @@ const WaqfeArdhiProjectRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={<PageProjects />} />
-        <Route path="/new" element={<PageNewProject />} />
+        <Route path="/:id" element={<PageCreateEditProject />} />
       </Routes>
     </>
   );

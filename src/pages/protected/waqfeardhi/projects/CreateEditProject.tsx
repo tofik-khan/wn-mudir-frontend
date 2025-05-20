@@ -13,17 +13,25 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ThumbnailModals } from "./modals/ThumbnailModal";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppSelector } from "@/hooks";
-import { useCreateProjectMutation } from "@/queries/waqfeardhi/projects";
+import {
+  useCreateProjectMutation,
+  useProjectsQuery,
+  useUpdateProjectMutation,
+} from "@/queries/waqfeardhi/projects";
+import { useParams } from "react-router-dom";
+import { Loading } from "@/components/Loading";
 
-export const PageNewProject = () => {
+export const PageCreateEditProject = () => {
   const { control, handleSubmit, reset } = useForm();
+  const { data: projects, isLoading: isLoadingProjects } = useProjectsQuery();
   const createProject = useCreateProjectMutation();
+  const updateProject = useUpdateProjectMutation();
   const [editorContent, updateEditorContent] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [success, setSuccess] = useState(false);
@@ -31,36 +39,83 @@ export const PageNewProject = () => {
   const [openThumbnailModal, setOpenThumbnailModal] = useState(false);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { currentUser } = useAppSelector((state) => state.admin);
+  const { id } = useParams();
+  const editMode = id !== "new";
   const navigate = useNavigate();
+
+  /** Setting state value if edit mode is set */
+  useEffect(() => {
+    if (editMode && projects && projects.length > 0) {
+      const currentProject = projects.find((project) => project._id === id);
+      setThumbnail(currentProject!.thumbnail);
+      updateEditorContent(currentProject!.description);
+    }
+  }, [projects, isLoadingProjects]);
+
   const onSubmit = async (data) => {
     if (editorContent === "") {
+      /** Description Required */
       setError({ open: true, message: "Description is required!" });
       return;
     }
     if (thumbnail === "") {
+      /** Thumbnail required */
       setError({ open: true, message: "Project Thumbnail is required!" });
+      return;
+    }
+    const projectSlugs = projects!.map((project) => project.slug);
+    if (projectSlugs.includes(data.slug)) {
+      /** Project Slug should be unique */
+      setError({ open: true, message: "Project Slug Must be unique!" });
       return;
     }
     if (isAuthenticated) {
       const authToken = await getAccessTokenSilently();
-      createProject.mutate({
-        authToken,
-        data: {
-          ...data,
-          description: editorContent,
-          thumbnail,
-          createdBy: currentUser?._id,
-          published: !!data.published,
-        },
-      });
+      if (editMode) {
+        updateProject.mutate({
+          authToken,
+          data: {
+            ...data,
+            _id: id,
+            description: editorContent,
+            thumbnail,
+            editedBy: currentUser?._id,
+            published: !!data.published,
+          },
+        });
+      } else {
+        createProject.mutate({
+          authToken,
+          data: {
+            ...data,
+            description: editorContent,
+            thumbnail,
+            createdBy: currentUser?._id,
+            published: !!data.published,
+          },
+        });
+      }
       setSuccess(true);
     }
   };
 
+  if (isLoadingProjects) return <Loading />;
+
+  const currentProject =
+    projects && projects.find((project) => project._id === id);
+
+  if (editMode && !currentProject) {
+    return (
+      <Typography variant="h2" color="error">
+        Could not fetch project
+      </Typography>
+    );
+  }
+
   return (
     <>
       <Typography variant="h2" textAlign={"center"}>
-        Create New Project
+        {editMode ? "Edit Project" : "Create New Project"}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box width={1000} m="auto">
@@ -76,15 +131,19 @@ export const PageNewProject = () => {
                 alignItems: "center",
               }}
             >
-              <LazyImage
-                src={thumbnail}
-                defaultImage={""}
-                style={{
-                  width: "600px",
-                  height: "400px",
-                  objectFit: "contain",
-                }}
-              />
+              {editMode ? (
+                <img src={thumbnail} width={600} height={400} />
+              ) : (
+                <LazyImage
+                  src={thumbnail}
+                  defaultImage={""}
+                  style={{
+                    width: "600px",
+                    height: "400px",
+                    objectFit: "contain",
+                  }}
+                />
+              )}
               <Button
                 sx={{ my: 1 }}
                 onClick={() => setOpenThumbnailModal(true)}
@@ -114,6 +173,7 @@ export const PageNewProject = () => {
                 name="title"
                 control={control}
                 key={"title-input"}
+                defaultValue={editMode ? currentProject!.title : ""}
               />
               <Controller
                 render={({ field }) => (
@@ -128,6 +188,7 @@ export const PageNewProject = () => {
                 name="subtitle"
                 control={control}
                 key={"subtitle-input"}
+                defaultValue={editMode ? currentProject!.subtitle : ""}
               />
             </Box>
             <Box
@@ -152,6 +213,7 @@ export const PageNewProject = () => {
                 name="duration"
                 control={control}
                 key={"duration-input"}
+                defaultValue={editMode ? currentProject!.duration : ""}
               />
               <Controller
                 render={({ field }) => (
@@ -166,6 +228,7 @@ export const PageNewProject = () => {
                 name="audience"
                 control={control}
                 key={"audience-input"}
+                defaultValue={editMode ? currentProject!.audience : ""}
               />
             </Box>
             <Box mx={1} my={3}>
@@ -206,6 +269,7 @@ export const PageNewProject = () => {
                 name="sponsor.name"
                 control={control}
                 key={"sponsor.name-input"}
+                defaultValue={editMode ? currentProject!.sponsor.name : ""}
               />
               <Controller
                 render={({ field }) => (
@@ -220,6 +284,7 @@ export const PageNewProject = () => {
                 name="sponsor.email"
                 control={control}
                 key={"sponsor.email-input"}
+                defaultValue={editMode ? currentProject!.sponsor.email : ""}
               />
             </Box>
             <Box mx={1}>
@@ -236,6 +301,9 @@ export const PageNewProject = () => {
                 name="sponsor.department"
                 control={control}
                 key={"sponsor.department-input"}
+                defaultValue={
+                  editMode ? currentProject!.sponsor.department : ""
+                }
               />
             </Box>
           </Card>
@@ -259,6 +327,7 @@ export const PageNewProject = () => {
                 name="slug"
                 control={control}
                 key={"slug-input"}
+                defaultValue={editMode ? currentProject!.slug : ""}
               />
               <Controller
                 render={({ field }) => (
@@ -273,6 +342,7 @@ export const PageNewProject = () => {
                 name="badge"
                 control={control}
                 key={"badge-input"}
+                defaultValue={editMode ? currentProject!.badge : ""}
               />
               <Controller
                 render={({ field }) => (
@@ -285,6 +355,7 @@ export const PageNewProject = () => {
                 name="published"
                 control={control}
                 key={"published-input"}
+                defaultValue={editMode ? currentProject!.published : ""}
               />
             </Box>
           </Card>
@@ -327,7 +398,7 @@ export const PageNewProject = () => {
             severity="success"
             variant="filled"
           >
-            <AlertTitle>Project Created!</AlertTitle>
+            <AlertTitle>Project {editMode ? "Edited" : "Created"}!</AlertTitle>
           </Alert>
           <LinearProgress sx={{ mx: 1 }} color="success" />
         </Box>
