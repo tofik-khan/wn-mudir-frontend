@@ -24,3 +24,17 @@ export const useCreateProjectMutation = () => {
     },
   });
 };
+
+export const useUpdateProjectMutation = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: ({ authToken, data }: { authToken: string; data: Project }) =>
+      API.updateProject({ authToken, data }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["waqfeardhi/projects"] });
+      navigate("/protected/waqfeardhi/projects");
+    },
+  });
+};

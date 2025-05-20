@@ -3,6 +3,7 @@ export type Project = {
   title: string;
   subtitle: string;
   description: string;
+  duration: string;
   audience: string;
   sponsor: {
     name: string;
@@ -12,6 +13,7 @@ export type Project = {
   slug: string;
   badge?: string;
   published: boolean;
+  thumbnail: string;
   createdBy: string;
   createdAt: string;
   editedBy: string;

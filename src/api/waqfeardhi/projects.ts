@@ -16,4 +16,15 @@ export const projectsAPI = {
       headers: { Authorization: `Bearer ${authToken}` },
     });
   },
+  updateProject: ({
+    authToken,
+    data,
+  }: {
+    authToken: string;
+    data: Project;
+  }) => {
+    return axios.put(`${API_BASE}/waqfeardhi/projects`, data, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+  },
 };
