@@ -30,7 +30,7 @@ export const PageProjects = () => {
         <LazyImage
           src={row.thumbnail}
           defaultImage={""}
-          style={{ width: "150px", height: "100px", objectFit: "contain" }}
+          style={{ width: "150px", height: "100px", objectFit: "cover" }}
         />
       ),
       width: 160,

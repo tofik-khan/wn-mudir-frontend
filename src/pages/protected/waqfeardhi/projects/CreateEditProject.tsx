@@ -66,8 +66,12 @@ export const PageCreateEditProject = () => {
     const projectSlugs = projects!.map((project) => project.slug);
     if (projectSlugs.includes(data.slug)) {
       /** Project Slug should be unique */
-      setError({ open: true, message: "Project Slug Must be unique!" });
-      return;
+      const currentProject =
+        projects && projects.find((project) => project._id === id);
+      if (!editMode || currentProject!.slug !== data.slug) {
+        setError({ open: true, message: "Project Slug Must be unique!" });
+        return;
+      }
     }
     if (isAuthenticated) {
       const authToken = await getAccessTokenSilently();
@@ -140,7 +144,7 @@ export const PageCreateEditProject = () => {
                   style={{
                     width: "600px",
                     height: "400px",
-                    objectFit: "contain",
+                    objectFit: "cover",
                   }}
                 />
               )}
@@ -332,7 +336,6 @@ export const PageCreateEditProject = () => {
               <Controller
                 render={({ field }) => (
                   <TextField
-                    required
                     {...field}
                     className="materialUIInput"
                     label="Badge"
