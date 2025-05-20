@@ -47,8 +47,19 @@ export const PageProjects = () => {
             height: "100%",
           }}
         >
-          <Typography>{row.title}</Typography>
-          <Typography sx={(theme) => ({ color: theme.palette.text.secondary })}>
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.title}
+          </Typography>
+          <Typography
+            sx={(theme) => ({
+              color: theme.palette.text.secondary,
+              width: "100%",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            })}
+          >
             {row.subtitle}
           </Typography>
         </Box>
@@ -67,7 +78,11 @@ export const PageProjects = () => {
             height: "100%",
           }}
         >
-          <Typography>{row.duration}</Typography>
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.duration}
+          </Typography>
         </Box>
       ),
       flex: 2,
@@ -84,7 +99,11 @@ export const PageProjects = () => {
             height: "100%",
           }}
         >
-          <Typography>{row.audience}</Typography>
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.audience}
+          </Typography>
         </Box>
       ),
       flex: 2,
@@ -101,7 +120,11 @@ export const PageProjects = () => {
             height: "100%",
           }}
         >
-          <Typography>{row.slug}</Typography>
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.slug}
+          </Typography>
         </Box>
       ),
       width: 150,
@@ -118,8 +141,19 @@ export const PageProjects = () => {
             height: "100%",
           }}
         >
-          <Typography>{row.sponsor.name}</Typography>
-          <Typography sx={(theme) => ({ color: theme.palette.text.secondary })}>
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.sponsor.name}
+          </Typography>
+          <Typography
+            sx={(theme) => ({
+              color: theme.palette.text.secondary,
+              width: "100%",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            })}
+          >
             {row.sponsor.email}
           </Typography>
         </Box>
@@ -138,7 +172,11 @@ export const PageProjects = () => {
             height: "100%",
           }}
         >
-          <Typography>{row.badge}</Typography>
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.badge}
+          </Typography>
         </Box>
       ),
       flex: 1,
