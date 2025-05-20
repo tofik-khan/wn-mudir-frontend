@@ -1,8 +1,8 @@
 import { LazyImage } from "@/components/LazyImage";
 import { Loading } from "@/components/Loading";
 import { useProjectsQuery } from "@/queries/waqfeardhi/projects";
-import { Add } from "@mui/icons-material";
-import { Box, Button, Switch, Typography } from "@mui/material";
+import { Add, CancelOutlined, CheckCircle } from "@mui/icons-material";
+import { Box, Button, Typography } from "@mui/material";
 import { DataGridPro, gridClasses, GridColDef } from "@mui/x-data-grid-pro";
 import { useNavigate } from "react-router";
 
@@ -151,12 +151,17 @@ export const PageProjects = () => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
               justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
               height: "100%",
             }}
           >
-            <Switch checked={row.published} />
+            {row.published ? (
+              <CheckCircle color="success" />
+            ) : (
+              <CancelOutlined color="error" />
+            )}
           </Box>
         </>
       ),
@@ -188,6 +193,9 @@ export const PageProjects = () => {
         getRowId={(row) => row._id}
         disableColumnMenu
         disableColumnResize
+        onRowClick={({ row }) =>
+          navigate(`/protected/waqfeardhi/projects/${row._id}`)
+        }
         sx={{
           [`& .${gridClasses.columnHeader}, & .${gridClasses.cell}`]: {
             outline: "transparent",
@@ -198,6 +206,11 @@ export const PageProjects = () => {
             },
           [`& .${gridClasses.columnSeparator}`]: {
             display: "none",
+          },
+          [`& .${gridClasses.row}`]: {
+            "&:hover": {
+              cursor: "pointer",
+            },
           },
         }}
         slotProps={{
