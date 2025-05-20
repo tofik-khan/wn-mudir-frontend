@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Badge, Box, Button, Chip, Divider, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import AppLogo from "@/assets/mudir-logo.png";
 import { Logout } from "@mui/icons-material";
@@ -39,11 +39,19 @@ export const AdminSideBar = () => {
         </Box>
         {/* WN Expo Links */}
         <Box>
-          <Typography
-            sx={(theme) => ({ color: theme.palette.grey[600], ml: 4 })}
-          >
-            Expo
-          </Typography>
+          <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+            <Typography
+              sx={(theme) => ({ color: theme.palette.grey[600], ml: 4 })}
+            >
+              Expo
+            </Typography>
+            <Chip
+              label="Coming Soon"
+              variant="outlined"
+              color="primary"
+              size="small"
+            />
+          </Box>
           <Button disabled fullWidth sx={{ mt: 1 }}>
             Dashboard
           </Button>
