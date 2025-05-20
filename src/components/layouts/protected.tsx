@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { Outlet } from "react-router";
 import { AdminBar } from "../Nav/AdminBar";
 import { AdminSideBar } from "../Nav/AdminSideBar";
@@ -13,70 +13,75 @@ import {
 import { useAppDispatch } from "@/hooks";
 import { setCurrentUser } from "@/reducers/admin";
 
-export const ProtectedLayout = () => {
-  const { isLoading: isLoadingAuth, logout, user } = useAuth0();
-  const { isLoading: isLoadingAdmins, data: adminData } = useAdminsQuery();
+export const ProtectedLayout = withAuthenticationRequired(
+  () => {
+    const { isLoading: isLoadingAuth, logout, user } = useAuth0();
+    const { isLoading: isLoadingAdmins, data: adminData } = useAdminsQuery();
 
-  const adminImageMutation = useAdminImageMutation();
-  const adminLastLoginMutation = useAdminLastLoginMutation();
+    const adminImageMutation = useAdminImageMutation();
+    const adminLastLoginMutation = useAdminLastLoginMutation();
 
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const updateAdminImage = async ({ _id, image }) => {
-    await adminImageMutation.mutateAsync({
-      _id,
-      image,
-    });
-  };
+    const updateAdminImage = async ({ _id, image }) => {
+      await adminImageMutation.mutateAsync({
+        _id,
+        image,
+      });
+    };
 
-  const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: `${window.location.protocol}//${window.location.host}/403`,
-      },
-    });
-  };
+    const handleLogout = () => {
+      logout({
+        logoutParams: {
+          returnTo: `${window.location.protocol}//${window.location.host}/403`,
+        },
+      });
+    };
 
-  useEffect(() => {
-    if (!(isLoadingAuth || isLoadingAdmins)) {
-      const currentUser = adminData?.find(
-        (admin) => admin.email === user?.email
-      );
-      if (!currentUser || !currentUser.isAuthorized) {
-        handleLogout();
-      } else {
-        adminLastLoginMutation.mutate({ _id: currentUser._id });
-        if (currentUser.image !== user!.picture)
-          updateAdminImage({ _id: currentUser._id, image: user!.picture });
+    useEffect(() => {
+      if (!(isLoadingAuth || isLoadingAdmins)) {
+        const currentUser = adminData?.find(
+          (admin) => admin.email === user?.email
+        );
+
+        adminLastLoginMutation.mutate({ _id: currentUser!._id });
+        if (currentUser!.image !== user!.picture)
+          updateAdminImage({ _id: currentUser!._id, image: user!.picture });
       }
+    }, [isLoadingAdmins, isLoadingAuth]);
+
+    if (isLoadingAuth || isLoadingAdmins) return <Loading />;
+
+    const currentUser =
+      adminData &&
+      user &&
+      adminData.find((admin) => admin.email === user.email);
+    if (!currentUser) {
+      handleLogout();
+      return <></>;
     }
-  }, [isLoadingAdmins, isLoadingAuth]);
 
-  if (isLoadingAuth || isLoadingAdmins) return <Loading />;
+    dispatch(setCurrentUser(currentUser));
 
-  const currentUser =
-    adminData && user && adminData.find((admin) => admin.email === user.email);
-  if (!currentUser) {
-    handleLogout();
-    return <></>;
+    return (
+      <>
+        <AdminSideBar />
+        <AdminBar />
+        <Box
+          component={"main"}
+          sx={{
+            ml: "200px",
+            px: "20px",
+            pt: "40px",
+          }}
+        >
+          <Outlet />
+        </Box>
+      </>
+    );
+  },
+  {
+    onRedirecting: () => <Loading />,
+    returnTo: window.location.pathname,
   }
-
-  dispatch(setCurrentUser(currentUser));
-
-  return (
-    <>
-      <AdminSideBar />
-      <AdminBar />
-      <Box
-        component={"main"}
-        sx={{
-          ml: "200px",
-          px: "20px",
-          pt: "40px",
-        }}
-      >
-        <Outlet />
-      </Box>
-    </>
-  );
-};
+);

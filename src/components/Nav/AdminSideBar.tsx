@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Chip, Divider, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import AppLogo from "@/assets/mudir-logo.png";
 import { Logout } from "@mui/icons-material";
@@ -88,7 +88,7 @@ export const AdminSideBar = () => {
           >
             Projects
           </Button>
-          <Button disabled fullWidth sx={{ mt: 1 }}>
+          <Button fullWidth sx={{ mt: 1 }}>
             Applicants
           </Button>
         </Box>
