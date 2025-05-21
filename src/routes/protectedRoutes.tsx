@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router";
 import { PageImageLibrary } from "@/pages/protected/images";
 import { PageProjects } from "@/pages/protected/waqfeardhi/projects";
 import { PageCreateEditProject } from "@/pages/protected/waqfeardhi/projects/CreateEditProject";
+import { PageApplicants } from "@/pages/protected/waqfeardhi/applicants";
 
 export const ProtectedRoutes = () => {
   return (
@@ -29,7 +30,8 @@ const WaqfeArdhiRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={<p>Waqf-e-Ardhi Dashboard</p>} />
-        <Route path="/projects/*" element={<WaqfeArdhiProjectRoutes />}></Route>
+        <Route path="/projects/*" element={<WaqfeArdhiProjectRoutes />} />
+        <Route path="/applicants/*" element={<WaqfeArdhiApplicantRoutes />} />
       </Routes>
     </>
   );
@@ -41,6 +43,16 @@ const WaqfeArdhiProjectRoutes = () => {
       <Routes>
         <Route path="/" element={<PageProjects />} />
         <Route path="/:id" element={<PageCreateEditProject />} />
+      </Routes>
+    </>
+  );
+};
+
+const WaqfeArdhiApplicantRoutes = () => {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<PageApplicants />} />
       </Routes>
     </>
   );
