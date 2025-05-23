@@ -19,3 +19,20 @@ export type Project = {
   editedBy: string;
   editedAt: string;
 };
+
+export type Applicant = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  jammat: string;
+  auxiliary: string;
+  isWaqfenau: boolean;
+  comments: string;
+  slug: string;
+  timestamp: Date;
+  date: string;
+  adminNote: string;
+  status: string;
+};

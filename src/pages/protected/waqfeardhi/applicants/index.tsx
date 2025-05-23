@@ -1,8 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Loading } from "@/components/Loading";
+import { useApplicantsQuery } from "@/queries/waqfeardhi/applicants";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { DataGridPro, GridColDef, gridClasses } from "@mui/x-data-grid-pro";
 
 export const PageApplicants = () => {
-  const data = []; //temporary placeholder
+  const { data, isLoading } = useApplicantsQuery();
+
+  if (isLoading) return <Loading />;
 
   const columns: GridColDef[] = [
     {
@@ -30,19 +34,71 @@ export const PageApplicants = () => {
           >
             {row.firstname} {row.lastname}
           </Typography>
+        </Box>
+      ),
+      width: 200,
+    },
+    {
+      field: "membercode",
+      headerName: "ID #",
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
           <Typography
-            sx={(theme) => ({
-              color: theme.palette.text.secondary,
-              width: "100%",
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-            })}
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
           >
             {row.membercode}
           </Typography>
         </Box>
       ),
-      flex: 2,
+      width: 100,
+    },
+    {
+      field: "jammat",
+      headerName: "Jammat",
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.jammat}
+          </Typography>
+        </Box>
+      ),
+      width: 150,
+    },
+    {
+      field: "auxiliary",
+      headerName: "Auxiliary",
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.auxiliary}
+          </Typography>
+        </Box>
+      ),
     },
     {
       field: "description",
@@ -56,14 +112,24 @@ export const PageApplicants = () => {
             height: "100%",
           }}
         >
-          Description
+          <Tooltip title={<Typography>{row.comments}</Typography>} arrow>
+            <Typography
+              sx={{
+                width: "100%",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            >
+              {row.comments}
+            </Typography>
+          </Tooltip>
         </Box>
       ),
-      flex: 3,
+      width: 300,
     },
     {
-      field: "contact",
-      headerName: "Contact",
+      field: "email",
+      headerName: "Email",
       renderCell: ({ row }) => (
         <Box
           sx={{
@@ -90,7 +156,28 @@ export const PageApplicants = () => {
           </Typography>
         </Box>
       ),
-      width: 250,
+      width: 200,
+    },
+    {
+      field: "timestamp",
+      headerName: "Submission Date/Time",
+      renderCell: ({ row }) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Typography
+            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {row.timestamp}
+          </Typography>
+        </Box>
+      ),
+      width: 200,
     },
     {
       field: "slug",
@@ -107,11 +194,11 @@ export const PageApplicants = () => {
           <Typography
             sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
           >
-            {row.slug}
+            {row.projectSlug}
           </Typography>
         </Box>
       ),
-      width: 150,
+      flex: 1,
     },
   ];
 
@@ -121,8 +208,11 @@ export const PageApplicants = () => {
         <Typography variant="h2">Waqf-e-Ardhi Applicants</Typography>
       </Box>
       <DataGridPro
-        loading={false}
-        rows={data}
+        loading={isLoading}
+        rows={data?.map((applicant, index) => ({
+          ...applicant,
+          index: index + 1,
+        }))}
         rowHeight={100}
         columns={columns}
         getRowId={(row) => row._id}

@@ -1,0 +1,18 @@
+import { Applicant } from "@/types/waqfeardhi";
+import { API_BASE } from "../constants";
+
+import axios from "axios";
+
+export const applicantsAPI = {
+  getApplicants: async ({
+    authToken,
+  }): Promise<{ data: Applicant[]; status: string }> => {
+    return await axios
+      .get(`${API_BASE}/waqfeardhi/applicants`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then((response) => response.data);
+  },
+};
