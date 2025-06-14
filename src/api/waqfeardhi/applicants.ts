@@ -15,4 +15,16 @@ export const applicantsAPI = {
       })
       .then((response) => response.data);
   },
+  getOneApplicant: async ({
+    authToken,
+    _id,
+  }): Promise<{ data: Applicant[]; status: string }> => {
+    return await axios
+      .get(`${API_BASE}/waqfeardhi/applicants/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then((response) => response.data);
+  },
 };

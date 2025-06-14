@@ -15,3 +15,17 @@ export const useApplicantsQuery = () => {
     enabled: isAuthenticated,
   });
 };
+
+export const useOneApplicantQuery = ({ _id }) => {
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+
+  return useQuery({
+    queryKey: ["waqfeardhi/applicants/", `${_id}`],
+    queryFn: async () => {
+      const token = await getAccessTokenSilently();
+      return API.getOneApplicant({ authToken: token, _id });
+    },
+    select: (response) => response.data,
+    enabled: isAuthenticated,
+  });
+};

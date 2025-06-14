@@ -35,4 +35,5 @@ export type Applicant = {
   date: string;
   adminNote: string;
   status: string;
+  membercode: string;
 };

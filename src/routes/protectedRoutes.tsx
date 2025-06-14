@@ -7,6 +7,7 @@ import { PageImageLibrary } from "@/pages/protected/images";
 import { PageProjects } from "@/pages/protected/waqfeardhi/projects";
 import { PageCreateEditProject } from "@/pages/protected/waqfeardhi/projects/CreateEditProject";
 import { PageApplicants } from "@/pages/protected/waqfeardhi/applicants";
+import { PageApplicant } from "@/pages/protected/waqfeardhi/applicants/applicant";
 
 export const ProtectedRoutes = () => {
   return (
@@ -53,6 +54,7 @@ const WaqfeArdhiApplicantRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={<PageApplicants />} />
+        <Route path="/:id" element={<PageApplicant />} />
       </Routes>
     </>
   );
