@@ -209,7 +209,7 @@ export const PageApplicants = () => {
       <DataGridPro
         loading={isLoading}
         rows={data}
-        rowHeight={100}
+        rowHeight={60}
         columns={columns}
         getRowId={(row) => row._id}
         disableColumnMenu
