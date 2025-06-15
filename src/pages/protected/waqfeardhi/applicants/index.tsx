@@ -1,5 +1,6 @@
 import { Loading } from "@/components/Loading";
 import { useApplicantsQuery } from "@/queries/waqfeardhi/applicants";
+import { Applicant } from "@/types/waqfeardhi";
 import { Box, Tooltip, Typography } from "@mui/material";
 import { DataGridPro, GridColDef, gridClasses } from "@mui/x-data-grid-pro";
 import { useState } from "react";
@@ -15,10 +16,13 @@ export const PageApplicants = () => {
 
   if (isLoading) return <Loading />;
 
-  const columns: GridColDef[] = [
+  const columns: GridColDef<Applicant>[] = [
     {
       field: "name",
       headerName: "Applicant",
+      valueGetter: (_, row) => {
+        return `${row.firstname} ${row.lastname}`;
+      },
       renderCell: ({ row }) => (
         <Box
           sx={{
@@ -214,6 +218,7 @@ export const PageApplicants = () => {
         getRowId={(row) => row._id}
         disableColumnMenu
         disableColumnResize
+        showToolbar
         pagination
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}

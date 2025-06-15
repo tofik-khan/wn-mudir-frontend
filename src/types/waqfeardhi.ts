@@ -31,7 +31,7 @@ export type Applicant = {
   isWaqfenau: boolean;
   comments: string;
   slug: string;
-  timestamp: Date;
+  timestamp: string;
   date: string;
   adminNote: string;
   status: string;
