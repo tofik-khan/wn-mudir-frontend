@@ -2,11 +2,16 @@ import { Loading } from "@/components/Loading";
 import { useApplicantsQuery } from "@/queries/waqfeardhi/applicants";
 import { Box, Tooltip, Typography } from "@mui/material";
 import { DataGridPro, GridColDef, gridClasses } from "@mui/x-data-grid-pro";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 export const PageApplicants = () => {
   const { data, isLoading } = useApplicantsQuery();
   const navigate = useNavigate();
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: 25,
+    page: 0,
+  });
 
   if (isLoading) return <Loading />;
 
@@ -220,6 +225,9 @@ export const PageApplicants = () => {
         getRowId={(row) => row._id}
         disableColumnMenu
         disableColumnResize
+        pagination
+        paginationModel={paginationModel}
+        onPaginationModelChange={setPaginationModel}
         onRowClick={({ row }) =>
           navigate(`/protected/waqfeardhi/applicants/${row._id}`)
         }
