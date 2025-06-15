@@ -17,14 +17,6 @@ export const PageApplicants = () => {
 
   const columns: GridColDef[] = [
     {
-      field: "index",
-      headerName: "#",
-      renderCell: ({ row }) => row.index,
-      width: 50,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
       field: "name",
       headerName: "Applicant",
       renderCell: ({ row }) => (
@@ -216,10 +208,7 @@ export const PageApplicants = () => {
       </Box>
       <DataGridPro
         loading={isLoading}
-        rows={data?.map((applicant, index) => ({
-          ...applicant,
-          index: index + 1,
-        }))}
+        rows={data}
         rowHeight={100}
         columns={columns}
         getRowId={(row) => row._id}
