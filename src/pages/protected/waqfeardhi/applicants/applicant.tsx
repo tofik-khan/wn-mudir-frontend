@@ -1,6 +1,9 @@
 import { LazyImage } from "@/components/LazyImage";
 import { Loading } from "@/components/Loading";
-import { useOneApplicantQuery } from "@/queries/waqfeardhi/applicants";
+import {
+  useOneApplicantQuery,
+  useUpdateStatusMutation,
+} from "@/queries/waqfeardhi/applicants";
 import { useProjectsQuery } from "@/queries/waqfeardhi/projects";
 import {
   EmailOutlined,
@@ -23,6 +26,7 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { applicationStatusOptions } from "@/constants/waqfeardhi";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const PendingActions = () => {
   return (
@@ -69,6 +73,8 @@ export const PageApplicant = () => {
   const { data, isLoading } = useOneApplicantQuery({ _id: id });
   const { data: projects, isLoading: isLoadingProjects } = useProjectsQuery();
   const [status, setStatus] = useState<string>();
+  const { getAccessTokenSilently } = useAuth0();
+  const updateApplicantStatusMutation = useUpdateStatusMutation();
 
   useEffect(() => {
     if (isLoading === false) {
@@ -177,9 +183,17 @@ export const PageApplicant = () => {
           <Select
             labelId="application-status"
             id="application-status"
-            value={status}
+            value={status ?? applicant.status}
             label="Application Status"
-            onChange={(event) => setStatus(event.target.value)}
+            onChange={async (event) => {
+              const authToken = await getAccessTokenSilently();
+              updateApplicantStatusMutation.mutate({
+                authToken,
+                status: event.target.value,
+                _id: id ?? "",
+              });
+              setStatus(event.target.value);
+            }}
           >
             {applicationStatusOptions.map((status, index) => (
               <MenuItem value={status.value} key={index}>

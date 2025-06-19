@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { API } from "@/api";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -27,5 +27,19 @@ export const useOneApplicantQuery = ({ _id }) => {
     },
     select: (response) => response.data,
     enabled: isAuthenticated,
+  });
+};
+
+export const useUpdateStatusMutation = () => {
+  return useMutation({
+    mutationFn: ({
+      authToken,
+      status,
+      _id,
+    }: {
+      authToken: string;
+      status: string;
+      _id: string;
+    }) => API.updateApplicantStatus({ authToken, _id, status }),
   });
 };

@@ -27,4 +27,23 @@ export const applicantsAPI = {
       })
       .then((response) => response.data);
   },
+  updateApplicantStatus: async ({
+    authToken,
+    _id,
+    status,
+  }): Promise<{ data: Applicant; status: string }> => {
+    return await axios
+      .put(
+        `${API_BASE}/waqfeardhi/applicants/${_id}/status`,
+        {
+          status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
+      .then((response) => response.data);
+  },
 };
