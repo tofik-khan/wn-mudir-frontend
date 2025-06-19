@@ -10,39 +10,19 @@ import {
   TagOutlined,
 } from "@mui/icons-material";
 import {
-  Autocomplete,
   Box,
   Button,
   Card,
   Chip,
-  TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-
-const applicationStatusOptions = [
-  {
-    label: "Pending",
-    value: "pending",
-  },
-  {
-    label: "Introductions",
-    value: "intro-made",
-  },
-  {
-    label: "In Progress",
-    value: "in-progress",
-  },
-  {
-    label: "Completed",
-    value: "completed",
-  },
-  {
-    label: "Never Started",
-    value: "never-started",
-  },
-];
+import { applicationStatusOptions } from "@/constants/waqfeardhi";
 
 const PendingActions = () => {
   return (
@@ -96,11 +76,6 @@ export const PageApplicant = () => {
       setStatus(applicant?.status);
     }
   }, [isLoading]);
-
-  console.log(
-    status,
-    applicationStatusOptions.filter((option) => option.value === status)[0]
-  );
 
   if (isLoading || isLoadingProjects) return <Loading />;
 
@@ -197,19 +172,22 @@ export const PageApplicant = () => {
         <Typography sx={{ color: "text.secondary", fontSize: 14, mb: 1 }}>
           Actions (Work in Progress)
         </Typography>
-        <Autocomplete
-          options={applicationStatusOptions}
-          value={
-            applicationStatusOptions.filter(
-              (option) => option.value === status
-            )[0]
-          }
-          onChange={(_, select) => setStatus(select?.value)}
-          renderInput={(params) => (
-            <TextField {...params} label="Set Current Application Status" />
-          )}
-          sx={{ maxWidth: "30%" }}
-        />
+        <FormControl fullWidth>
+          <InputLabel id="application-status">Application Status</InputLabel>
+          <Select
+            labelId="application-status"
+            id="application-status"
+            value={status}
+            label="Application Status"
+            onChange={(event) => setStatus(event.target.value)}
+          >
+            {applicationStatusOptions.map((status, index) => (
+              <MenuItem value={status.value} key={index}>
+                {status.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <Box my={2}>
           {status === "pending" ? (
             <PendingActions />

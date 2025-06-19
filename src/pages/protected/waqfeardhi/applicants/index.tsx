@@ -1,4 +1,5 @@
 import { Loading } from "@/components/Loading";
+import { ApplicationStatusChip } from "@/components/waqfeardhi/ApplicationStatusChip";
 import { useApplicantsQuery } from "@/queries/waqfeardhi/applicants";
 import { Applicant } from "@/types/waqfeardhi";
 import { Box, Tooltip, Typography } from "@mui/material";
@@ -42,8 +43,8 @@ export const PageApplicants = () => {
       width: 200,
     },
     {
-      field: "membercode",
-      headerName: "ID #",
+      field: "status",
+      headerName: "Status",
       renderCell: ({ row }) => (
         <Box
           sx={{
@@ -53,14 +54,10 @@ export const PageApplicants = () => {
             height: "100%",
           }}
         >
-          <Typography
-            sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
-          >
-            {row.membercode}
-          </Typography>
+          <ApplicationStatusChip status={row.status} />
         </Box>
       ),
-      width: 100,
+      width: 120,
     },
     {
       field: "jammat",
@@ -222,6 +219,11 @@ export const PageApplicants = () => {
         pagination
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: "timestamp", sort: "desc" }],
+          },
+        }}
         onRowClick={({ row }) =>
           navigate(`/protected/waqfeardhi/applicants/${row._id}`)
         }

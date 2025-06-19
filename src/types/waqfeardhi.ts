@@ -34,6 +34,13 @@ export type Applicant = {
   timestamp: string;
   date: string;
   adminNote: string;
-  status: string;
+  status: ApplicationStatus;
   membercode: string;
 };
+
+export type ApplicationStatus =
+  | "pending"
+  | "intro-made"
+  | "in-progress"
+  | "completed"
+  | "never-started";
