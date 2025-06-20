@@ -78,7 +78,11 @@ export const AdminSideBar = () => {
           >
             Waqf-e-Ardhi
           </Typography>
-          <Button disabled fullWidth sx={{ mt: 1 }}>
+          <Button
+            fullWidth
+            sx={{ mt: 1 }}
+            onClick={() => navigate("/protected/waqfeardhi")}
+          >
             Dashboard
           </Button>
           <Button
