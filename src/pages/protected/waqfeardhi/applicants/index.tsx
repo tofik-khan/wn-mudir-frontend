@@ -4,6 +4,7 @@ import { useApplicantsQuery } from "@/queries/waqfeardhi/applicants";
 import { Applicant } from "@/types/waqfeardhi";
 import { Box, Tooltip, Typography } from "@mui/material";
 import { DataGridPro, GridColDef, gridClasses } from "@mui/x-data-grid-pro";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -173,7 +174,7 @@ export const PageApplicants = () => {
           <Typography
             sx={{ width: "100%", textOverflow: "ellipsis", overflow: "hidden" }}
           >
-            {row.timestamp}
+            {dayjs(row.timestamp).format("MM/DD/YY HH:mm a")}
           </Typography>
         </Box>
       ),
