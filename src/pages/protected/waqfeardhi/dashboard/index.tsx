@@ -1,3 +1,4 @@
+import { ApplicationsCountByAuxiliaryChart } from "@/components/waqfeardhi/ApplicationsCountByAuxiliaryChart";
 import { ApplicationsCountCard } from "@/components/waqfeardhi/ApplicationsCountCard";
 import { CompletedApplicationsCountCard } from "@/components/waqfeardhi/CompletedApplicationsCountCard";
 import { ProjectsCountCard } from "@/components/waqfeardhi/ProjectsCountCard";
@@ -54,11 +55,11 @@ export const PageWaqfeardhiDashboard = () => {
             variant="outlined"
             sx={{
               padding: 2,
-              height: "300px",
+              height: "350px",
               mr: 2,
             }}
           >
-            Pie Graph
+            <ApplicationsCountByAuxiliaryChart />
           </Paper>
         </Grid>
         <Grid size={8}>
@@ -66,7 +67,7 @@ export const PageWaqfeardhiDashboard = () => {
             variant="outlined"
             sx={{
               padding: 2,
-              height: "300px",
+              height: "350px",
             }}
           >
             Line Graph
