@@ -21,3 +21,10 @@ export const useProjectsCountQuery = () =>
     queryFn: API.getProjectsCount,
     select: (response) => response.data,
   });
+
+export const useApplicationsCountByAuxiliaryQuery = () =>
+  useQuery({
+    queryKey: ["waqfeardhi/dashboard/applicationsCountByAuxiliary"],
+    queryFn: API.getApplicationsCountByAuxiliary,
+    select: (response) => response.data,
+  });

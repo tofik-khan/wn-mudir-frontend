@@ -20,4 +20,12 @@ export const dashboardAPI = {
       .get(`${API_BASE}/waqfeardhi/count/projects`)
       .then((response) => response.data);
   },
+  getApplicationsCountByAuxiliary: async (): Promise<{
+    data: any[];
+    status: string;
+  }> => {
+    return await axios
+      .get(`${API_BASE}/waqfeardhi/count/applicationsByAuxiliary`)
+      .then((response) => response.data);
+  },
 };
