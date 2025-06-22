@@ -8,6 +8,7 @@ import { PageProjects } from "@/pages/protected/waqfeardhi/projects";
 import { PageCreateEditProject } from "@/pages/protected/waqfeardhi/projects/CreateEditProject";
 import { PageApplicants } from "@/pages/protected/waqfeardhi/applicants";
 import { PageApplicant } from "@/pages/protected/waqfeardhi/applicants/applicant";
+import { PageWaqfeardhiDashboard } from "@/pages/protected/waqfeardhi/dashboard";
 
 export const ProtectedRoutes = () => {
   return (
@@ -30,7 +31,7 @@ const WaqfeArdhiRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<p>Waqf-e-Ardhi Dashboard</p>} />
+        <Route path="/" element={<PageWaqfeardhiDashboard />} />
         <Route path="/projects/*" element={<WaqfeArdhiProjectRoutes />} />
         <Route path="/applicants/*" element={<WaqfeArdhiApplicantRoutes />} />
       </Routes>
