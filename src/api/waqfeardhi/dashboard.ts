@@ -28,4 +28,22 @@ export const dashboardAPI = {
       .get(`${API_BASE}/waqfeardhi/count/applicationsByAuxiliary`)
       .then((response) => response.data);
   },
+  getApplicationsPerMonth: async (): Promise<{
+    data: any[];
+    status: string;
+  }> => {
+    return await axios
+      .get(`${API_BASE}/waqfeardhi/count/applicationsPerMonth`)
+      .then((response) => response.data);
+  },
+  getApplicationsCountByStatus: async ({
+    status,
+  }): Promise<{
+    data: number;
+    status: string;
+  }> => {
+    return await axios
+      .get(`${API_BASE}/waqfeardhi/count/status/${status}`)
+      .then((response) => response.data);
+  },
 };

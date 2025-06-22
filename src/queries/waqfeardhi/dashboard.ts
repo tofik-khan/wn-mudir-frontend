@@ -28,3 +28,17 @@ export const useApplicationsCountByAuxiliaryQuery = () =>
     queryFn: API.getApplicationsCountByAuxiliary,
     select: (response) => response.data,
   });
+
+export const useApplicationsPerMonthQuery = () =>
+  useQuery({
+    queryKey: ["waqfeardhi/dashboard/applicationsPerMonth"],
+    queryFn: API.getApplicationsPerMonth,
+    select: (response) => response.data,
+  });
+
+export const useApplicationsByStatusQuery = (status) =>
+  useQuery({
+    queryKey: ["waqfeardhi/dashboard/applicationsByStatus", status],
+    queryFn: () => API.getApplicationsCountByStatus({ status }),
+    select: (response) => response.data,
+  });
