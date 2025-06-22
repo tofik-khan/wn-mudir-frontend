@@ -316,7 +316,13 @@ export const PageCreateEditProject = () => {
               Metadata
             </Typography>
             <Box
-              sx={{ mx: 1, display: "flex", flexDirection: "column", gap: 2 }}
+              sx={{
+                mx: 1,
+                my: 2,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              }}
             >
               <Controller
                 render={({ field }) => (
