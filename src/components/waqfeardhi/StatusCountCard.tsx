@@ -1,8 +1,8 @@
-import { useApplicationsCountQuery } from "@/queries/waqfeardhi/dashboard";
+import { useApplicationsByStatusQuery } from "@/queries/waqfeardhi/dashboard";
 import { Box, CircularProgress, Paper, Typography } from "@mui/material";
 
-export const ApplicationsCountCard = () => {
-  const { data: count, isLoading } = useApplicationsCountQuery();
+export const StatusCountCard = ({ title, status }) => {
+  const { data: count, isLoading } = useApplicationsByStatusQuery(status);
 
   return (
     <>
@@ -26,7 +26,7 @@ export const ApplicationsCountCard = () => {
           </Box>
         ) : (
           <>
-            <Typography variant="overline">Total Applications</Typography>
+            <Typography variant="overline">{title}</Typography>
             <Typography variant="h4" fontWeight={"bold"}>
               {count}
             </Typography>

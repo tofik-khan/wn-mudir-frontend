@@ -11,7 +11,6 @@ export const ProjectsCountCard = () => {
         sx={{
           padding: 2,
           height: "100px",
-          mr: 2,
         }}
       >
         {isLoading ? (
@@ -27,7 +26,7 @@ export const ProjectsCountCard = () => {
           </Box>
         ) : (
           <>
-            <Typography variant="overline">Total Applications</Typography>
+            <Typography variant="overline">Total Projects</Typography>
             <Typography variant="h4" fontWeight={"bold"}>
               {count}
             </Typography>
