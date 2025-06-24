@@ -1,21 +1,38 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from "@mui/material";
+import { ApplicationStatus } from "@/components/dashboard/ApplicationStatus";
+import { ImageKitBandwidthUsage } from "@/components/dashboard/ImageKitBandwidthUsage";
+import { ImageKitStorageUsage } from "@/components/dashboard/ImageKitStorageUsage";
+import { Grid, Paper, Typography } from "@mui/material";
 
 export const PageDashboard = () => {
-  const { user, logout } = useAuth0();
-
-  const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: window.location.origin,
-      },
-    });
-  };
   return (
     <>
-      <p>Authenticated</p>
-      <p>User: {user?.email}</p>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Grid container wrap="nowrap" direction={"row"} gap={2}>
+        <Grid size={8}>
+          <Paper sx={{ padding: 2 }} elevation={2}>
+            <Typography variant="h5" my={2}>
+              Usage & Status
+            </Typography>
+            <Grid container wrap="nowrap" direction={"row"} gap={2}>
+              <Grid
+                size={3}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  minWidth: "200px",
+                }}
+              >
+                <ImageKitStorageUsage />
+                <ImageKitBandwidthUsage />
+              </Grid>
+              <Grid size={9}>
+                <ApplicationStatus />
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid size={4}>Feed</Grid>
+      </Grid>
     </>
   );
 };

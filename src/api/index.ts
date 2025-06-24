@@ -1,4 +1,5 @@
 import { adminAPI } from "./mudir/admins";
+import { mudirDashboardAPI } from "./mudir/dashboard";
 import { imagesAPI } from "./mudir/images";
 import { applicantsAPI } from "./waqfeardhi/applicants";
 import { dashboardAPI } from "./waqfeardhi/dashboard";
@@ -10,4 +11,5 @@ export const API = {
   ...projectsAPI,
   ...applicantsAPI,
   ...dashboardAPI,
+  ...mudirDashboardAPI,
 };
