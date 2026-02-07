@@ -1,3 +1,4 @@
+import { expoPresentersAPI } from "./expo/presenters";
 import { adminAPI } from "./mudir/admins";
 import { mudirDashboardAPI } from "./mudir/dashboard";
 import { imagesAPI } from "./mudir/images";
@@ -12,4 +13,5 @@ export const API = {
   ...applicantsAPI,
   ...dashboardAPI,
   ...mudirDashboardAPI,
+  ...expoPresentersAPI,
 };
