@@ -9,6 +9,8 @@ import { PageCreateEditProject } from "@/pages/protected/waqfeardhi/projects/Cre
 import { PageApplicants } from "@/pages/protected/waqfeardhi/applicants";
 import { PageApplicant } from "@/pages/protected/waqfeardhi/applicants/applicant";
 import { PageWaqfeardhiDashboard } from "@/pages/protected/waqfeardhi/dashboard";
+import { PageExpoPresenters } from "@/pages/protected/expo/presenters";
+import { PageCreateEditPresenter } from "@/pages/protected/expo/presenters/edit";
 
 export const ProtectedRoutes = () => {
   return (
@@ -66,6 +68,18 @@ const ExpoRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={<p>Expo Dashboard</p>} />
+        <Route path="/presenters/*" element={<PresentersRoutes />} />
+      </Routes>
+    </>
+  );
+};
+
+const PresentersRoutes = () => {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<PageExpoPresenters />} />
+        <Route path="/:id" element={<PageCreateEditPresenter />} />
       </Routes>
     </>
   );
