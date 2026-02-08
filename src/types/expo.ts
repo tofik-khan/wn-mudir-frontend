@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export type Presenter = {
   _id: string;
   name: string;
@@ -12,12 +14,11 @@ export type Session = {
   title: string;
   description: string;
   location: string;
-  startTime: string;
-  endTime: string;
+  startTime: Dayjs;
+  endTime: Dayjs;
   date: string;
-  speakers: Presenter[];
+  presenters: { label: string; value: string }[];
   link: string;
   thumbnail: string;
   isPublished: boolean;
-  sortOrder: number;
 };

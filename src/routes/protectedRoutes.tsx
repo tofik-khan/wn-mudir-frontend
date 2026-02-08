@@ -11,6 +11,8 @@ import { PageApplicant } from "@/pages/protected/waqfeardhi/applicants/applicant
 import { PageWaqfeardhiDashboard } from "@/pages/protected/waqfeardhi/dashboard";
 import { PageExpoPresenters } from "@/pages/protected/expo/presenters";
 import { PageCreateEditPresenter } from "@/pages/protected/expo/presenters/edit";
+import { PageExpoSessions } from "@/pages/protected/expo/sessions";
+import { PageCreateEditSession } from "@/pages/protected/expo/sessions/edit";
 
 export const ProtectedRoutes = () => {
   return (
@@ -69,6 +71,7 @@ const ExpoRoutes = () => {
       <Routes>
         <Route path="/" element={<p>Expo Dashboard</p>} />
         <Route path="/presenters/*" element={<PresentersRoutes />} />
+        <Route path="/sessions/*" element={<ExpoSessionRoutes />} />
       </Routes>
     </>
   );
@@ -80,6 +83,17 @@ const PresentersRoutes = () => {
       <Routes>
         <Route path="/" element={<PageExpoPresenters />} />
         <Route path="/:id" element={<PageCreateEditPresenter />} />
+      </Routes>
+    </>
+  );
+};
+
+const ExpoSessionRoutes = () => {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<PageExpoSessions />} />
+        <Route path="/:id" element={<PageCreateEditSession />} />
       </Routes>
     </>
   );
