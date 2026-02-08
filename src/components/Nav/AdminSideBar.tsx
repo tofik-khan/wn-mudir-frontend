@@ -55,7 +55,11 @@ export const AdminSideBar = () => {
           <Button disabled fullWidth sx={{ mt: 1 }}>
             Dashboard
           </Button>
-          <Button disabled fullWidth sx={{ mt: 1 }}>
+          <Button
+            onClick={() => navigate("/protected/expo/sessions")}
+            fullWidth
+            sx={{ mt: 1 }}
+          >
             Sessions
           </Button>
           <Button
