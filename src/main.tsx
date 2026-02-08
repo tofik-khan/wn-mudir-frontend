@@ -9,6 +9,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LicenseInfo } from "@mui/x-license";
 import store from "./store.ts";
 import { Provider } from "react-redux";
+import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 LicenseInfo.setLicenseKey(import.meta.env.VITE_MUI_X_PRO_LICENSE);
 
@@ -21,11 +26,13 @@ createRoot(document.getElementById("root")!).render(
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <ThemeProvider theme={theme}>
-              <App />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <App />
+              </LocalizationProvider>
             </ThemeProvider>
           </AuthProvider>
         </QueryClientProvider>
       </Provider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );

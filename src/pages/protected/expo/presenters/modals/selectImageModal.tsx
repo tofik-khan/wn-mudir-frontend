@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useImageKitGetFolderAssets } from "@/queries/mudir/images";
-import { waqfeArdhiFolders } from "@/constants";
+import { expoFolders } from "@/constants";
 import { Gallery } from "@/components/Gallery";
 
-export const ThumbnailModals = ({
+export const PresenterImageModal = ({
   open,
   onClose,
   onClick,
@@ -20,14 +20,14 @@ export const ThumbnailModals = ({
   onClose: any;
   onClick: any;
 }) => {
-  const folder = waqfeArdhiFolders[0];
+  const folder = expoFolders[0];
   const { data, isLoading } = useImageKitGetFolderAssets({
     folder,
   });
   return (
     <>
       <Dialog open={open} onClose={onClose} fullWidth maxWidth={"lg"}>
-        <DialogTitle>Select Project Thumbnail</DialogTitle>
+        <DialogTitle>Select Presenter Image</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={onClose}
