@@ -28,7 +28,7 @@ export const PageCreateEditPresenter = () => {
   const editMode = id !== "new";
   const navigate = useNavigate();
 
-  const { data, isLoading } = useOnePresenterQuery(id);
+  const { data, isLoading, isRefetching } = useOnePresenterQuery(id);
   const createPresenter = usePresenterMutation({
     onSuccess: () => {
       navigate("/protected/expo/presenters");
@@ -55,6 +55,7 @@ export const PageCreateEditPresenter = () => {
     const payload = {
       bio,
       ...data,
+      isFeatured: Boolean(data.isFeatured === "true"),
     };
     if (editMode) {
       updatePresenter.mutate({ data: payload, id: id ?? "" });
@@ -70,7 +71,7 @@ export const PageCreateEditPresenter = () => {
     }
   }, [data]);
 
-  if (isLoading) return <Loading />;
+  if (isLoading || isRefetching) return <Loading />;
 
   return (
     <>
@@ -182,6 +183,7 @@ export const PageCreateEditPresenter = () => {
             name="isFeatured"
             control={control}
             key={"isFeatured-input"}
+            defaultValue={Boolean(data?.isFeatured)}
           />
           <Box mx={1} my={1}>
             <Typography
@@ -192,8 +194,8 @@ export const PageCreateEditPresenter = () => {
             <Editor content={bio} setContent={(content) => setBio(content)} />
           </Box>
           <Button
-            loading={createPresenter.isPending}
-            disabled={createPresenter.isPending}
+            loading={createPresenter.isPending || updatePresenter.isPending}
+            disabled={createPresenter.isPending || updatePresenter.isPending}
             variant="contained"
             type="submit"
           >

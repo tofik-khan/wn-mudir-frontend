@@ -25,7 +25,7 @@ export const useSessionMutation = ({ onSuccess, onError }) => {
   return useMutation({
     mutationFn: async ({ data }: { data: Session }) => {
       const authToken = await getAccessTokenSilently();
-      API.createSession({ authToken, reqBody: data });
+      return API.createSession({ authToken, reqBody: data });
     },
     onSuccess,
     onError,
@@ -38,7 +38,7 @@ export const useUpdateSessionMutation = ({ onSuccess, onError }) => {
   return useMutation({
     mutationFn: async ({ data, id }: { data: Session; id: string }) => {
       const authToken = await getAccessTokenSilently();
-      API.updateSession({ authToken, id, reqBody: data });
+      return API.updateSession({ authToken, id, reqBody: data });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["session"] });

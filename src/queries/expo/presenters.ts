@@ -25,7 +25,7 @@ export const usePresenterMutation = ({ onSuccess, onError }) => {
   return useMutation({
     mutationFn: async ({ data }: { data: Presenter }) => {
       const authToken = await getAccessTokenSilently();
-      API.createPresenter({ authToken, reqBody: data });
+      return API.createPresenter({ authToken, reqBody: data });
     },
     onSuccess,
     onError,
@@ -38,7 +38,7 @@ export const useUpdatePresenterMutation = ({ onSuccess, onError }) => {
   return useMutation({
     mutationFn: async ({ data, id }: { data: Presenter; id: string }) => {
       const authToken = await getAccessTokenSilently();
-      API.updatePresenter({ authToken, id, reqBody: data });
+      return API.updatePresenter({ authToken, id, reqBody: data });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["presenters"] });
