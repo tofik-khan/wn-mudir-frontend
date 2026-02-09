@@ -92,11 +92,15 @@ export const PageCreateEditSession = () => {
       ...data,
       startTime:
         typeof data.startTime === "string"
-          ? data.startTime
+          ? dayjs
+              .tz(data.startTime, "hh:mm a", "America/New_York")
+              .format("hh:mm a")
           : data.startTime.tz("America/New_York").format("hh:mm a"),
       endTime:
         typeof data.endTime === "string"
-          ? data.endTime
+          ? dayjs
+              .tz(data.endTime, "hh:mm a", "America/New_York")
+              .format("hh:mm a")
           : data.endTime.tz("America/New_York").format("hh:mm a"),
       date: typeof data.date === "string" ? data.date : data.date.value,
       description,
