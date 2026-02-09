@@ -23,6 +23,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   useOneSessionQuery,
   useSessionMutation,
@@ -31,6 +32,7 @@ import {
 import { Loading } from "@/components/Loading";
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(customParseFormat);
 
 export const PageCreateEditSession = () => {
   const { id } = useParams();
@@ -91,11 +93,11 @@ export const PageCreateEditSession = () => {
       startTime:
         typeof data.startTime === "string"
           ? data.startTime
-          : data.startTime.format("hh:mm a"),
+          : data.startTime.tz("America/New_York").format("hh:mm a"),
       endTime:
         typeof data.endTime === "string"
           ? data.endTime
-          : data.endTime.format("hh:mm a"),
+          : data.endTime.tz("America/New_York").format("hh:mm a"),
       date: typeof data.date === "string" ? data.date : data.date.value,
       description,
     };
@@ -257,12 +259,21 @@ export const PageCreateEditSession = () => {
                 <>
                   <TimePicker
                     label="Start Time"
-                    value={value ? dayjs(value, "hh:mm a") : null}
+                    value={
+                      value
+                        ? dayjs.tz(value, "hh:mm a", "America/New_York")
+                        : null
+                    }
                     onChange={(newValue) => {
-                      return onChange(newValue);
+                      if (!newValue) return onChange(null);
+
+                      // Force into Eastern before storing
+                      const eastern = newValue.tz("America/New_York");
+
+                      onChange(eastern.format("hh:mm a"));
                     }}
                     sx={{ width: "200px" }}
-                    timezone="America/New_York"
+                    timezone={"America/New_York"}
                   />
                 </>
               );
@@ -277,12 +288,21 @@ export const PageCreateEditSession = () => {
                 <>
                   <TimePicker
                     label="End Time"
-                    value={value ? dayjs(value, "hh:mm a") : null}
+                    value={
+                      value
+                        ? dayjs.tz(value, "hh:mm a", "America/New_York")
+                        : null
+                    }
                     onChange={(newValue) => {
-                      return onChange(newValue);
+                      if (!newValue) return onChange(null);
+
+                      // Force into Eastern before storing
+                      const eastern = newValue.tz("America/New_York");
+
+                      onChange(eastern.format("hh:mm a"));
                     }}
                     sx={{ width: "200px" }}
-                    timezone="America/New_York"
+                    timezone={"America/New_York"}
                   />
                 </>
               );
