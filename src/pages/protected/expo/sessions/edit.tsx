@@ -112,11 +112,6 @@ export const PageCreateEditSession = () => {
     }
   };
 
-  const dates = [
-    { label: "Day 1", value: "2026-05-10" },
-    { label: "Day 2", value: "2026-05-11" },
-  ];
-
   return (
     <>
       <Typography variant="h2">{`${editMode ? "Edit" : "Add"} Session`}</Typography>
@@ -317,26 +312,36 @@ export const PageCreateEditSession = () => {
           />
 
           <Controller
-            render={({ field }) => (
-              <Autocomplete
-                className="materialUIInput"
-                options={dates}
-                defaultValue={
-                  dates.find((date) => date.value === field.value) ?? dates[0]
-                }
-                isOptionEqualToValue={(opt, val) => opt.value === val.value}
-                onChange={(_, option) => {
-                  field.onChange(option);
-                }}
-                limitTags={4}
-                renderInput={(params) => (
-                  <TextField sx={{ width: "500px" }} {...params} label="Date" />
-                )}
-              />
-            )}
+            render={({ field }) => {
+              return (
+                <>
+                  <FormControl>
+                    <FormLabel>Date</FormLabel>
+                    <RadioGroup
+                      {...field}
+                      value={field.value}
+                      onChange={field.onChange}
+                      row
+                    >
+                      <FormControlLabel
+                        value={"2026-05-09"}
+                        label="Day 1 - May 9th"
+                        control={<Radio />}
+                      />
+                      <FormControlLabel
+                        value={"2026-05-10"}
+                        label="Day 2 - May 10th"
+                        control={<Radio />}
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </>
+              );
+            }}
             name="date"
             control={control}
-            key="date-input"
+            key={"date-input"}
+            defaultValue={data?.date}
           />
           <Controller
             render={({ field, fieldState }) => (
