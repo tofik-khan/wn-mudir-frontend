@@ -69,7 +69,11 @@ export const AdminSideBar = () => {
           >
             Presenters
           </Button>
-          <Button disabled fullWidth sx={{ mt: 1 }}>
+          <Button
+            fullWidth
+            sx={{ mt: 1 }}
+            onClick={() => navigate("/protected/expo/faqs")}
+          >
             FAQs
           </Button>
         </Box>
