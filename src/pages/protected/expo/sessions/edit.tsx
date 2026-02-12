@@ -105,7 +105,7 @@ export const PageCreateEditSession = () => {
           : data.endTime.tz("America/New_York").format("hh:mm a"),
       date: typeof data.date === "string" ? data.date : data.date.value,
       description,
-      isPublished: Boolean(data.isPublished),
+      isPublished: Boolean(data.isPublished === "true"),
     };
     if (editMode) {
       updateSession.mutate({ data: payload, id: id ?? "" });
