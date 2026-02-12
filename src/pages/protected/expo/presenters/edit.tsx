@@ -46,6 +46,7 @@ export const PageCreateEditPresenter = () => {
     defaultValues: {
       image: "",
       isFeatured: false,
+      isPublished: false,
     },
   });
   const [bio, setBio] = useState("");
@@ -56,6 +57,7 @@ export const PageCreateEditPresenter = () => {
       bio,
       ...data,
       isFeatured: Boolean(data.isFeatured === "true"),
+      isPublished: Boolean(data.published === "true"),
     };
     if (editMode) {
       updatePresenter.mutate({ data: payload, id: id ?? "" });
@@ -184,6 +186,37 @@ export const PageCreateEditPresenter = () => {
             control={control}
             key={"isFeatured-input"}
             defaultValue={Boolean(data?.isFeatured)}
+          />
+          <Controller
+            render={({ field }) => {
+              return (
+                <>
+                  <FormControl>
+                    <FormLabel>Published?</FormLabel>
+                    <RadioGroup
+                      {...field}
+                      value={field.value}
+                      onChange={field.onChange}
+                      row
+                    >
+                      <FormControlLabel
+                        value={true}
+                        label="Yes"
+                        control={<Radio />}
+                      />
+                      <FormControlLabel
+                        value={false}
+                        label="No"
+                        control={<Radio />}
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </>
+              );
+            }}
+            name="isPublished"
+            control={control}
+            key={"isPublished-input"}
           />
           <Box mx={1} my={1}>
             <Typography

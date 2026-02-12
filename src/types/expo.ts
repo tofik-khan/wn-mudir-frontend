@@ -5,6 +5,7 @@ export type Presenter = {
   name: string;
   department: string;
   isFeatured: boolean;
+  isPublished: boolean;
   image: string;
   bio: string;
 };
