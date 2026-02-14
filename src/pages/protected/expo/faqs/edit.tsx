@@ -51,7 +51,10 @@ export const PageExpoEditFAQ = () => {
   const onSubmit = (data) => {
     const payload = {
       ...data,
-      isPublished: Boolean(data.isPublished === "true"),
+      isPublished:
+        typeof data.isPublished === "boolean"
+          ? data.isPublished
+          : Boolean(data.isPublished === "true"),
     };
     if (editMode) {
       updateFAQ.mutate({ data: payload, id: id ?? "" });
