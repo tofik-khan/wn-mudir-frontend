@@ -57,7 +57,7 @@ export const PageCreateEditPresenter = () => {
       bio,
       ...data,
       isFeatured: Boolean(data.isFeatured === "true"),
-      isPublished: Boolean(data.published === "true"),
+      isPublished: Boolean(data.isPublished === "true"),
     };
     if (editMode) {
       updatePresenter.mutate({ data: payload, id: id ?? "" });
