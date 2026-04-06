@@ -67,7 +67,7 @@ export const PageExpoSessions = () => {
             justifyContent: "center",
           }}
         >
-          {row.presenters.map((presenter) => (
+          {row.presenters?.map((presenter) => (
             <Typography key={presenter.value}>{presenter.label}</Typography>
           ))}
         </Box>
