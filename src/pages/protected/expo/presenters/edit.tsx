@@ -54,8 +54,8 @@ export const PageCreateEditPresenter = () => {
 
   const onSubmit = (data) => {
     const payload = {
-      bio,
       ...data,
+      bio,
       isFeatured: Boolean(data.isFeatured === "true"),
       isPublished: Boolean(data.isPublished === "true"),
     };
